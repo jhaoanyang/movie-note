@@ -1,9 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { AppBar, Toolbar, Typography, Button, makeStyles }  from '@material-ui/core/';
 import TheatersIcon from '@material-ui/icons/Theaters';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
+
+
 function Header() {
-  const authData = useSelector((state) => state.auth);
+  const classes = useStyles();
+
+  const authData = useSelector(state => state.auth);
 
   function loginStatus() {
     switch (authData) {
@@ -11,26 +28,26 @@ function Header() {
         return;
       case false:
         return (
-          <li><a href="/auth/google">Login With Google</a></li>
+          <Button color="inherit" href="/auth/google">Login With Google</Button>
         );
       default:
         return (
-          <li><a href="/api/logout">Logout</a></li>
+          <Button color="inherit" href="/api/logout">Logout</Button>
         );
     }
   }
 
   return (
-    <nav>
-      <div className="nav-wrapper amber darken-3">
-        <a href="/" className="brand-logo">
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
           <TheatersIcon />Movie Notes
-        </a>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
+          </Typography>
           {loginStatus()}
-        </ul>
-      </div>
-    </nav>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 
