@@ -36,7 +36,7 @@ function ScenceForm(props) {
   const classes = useStyles();
 
   const [editing, setEditing] = useState(false);
-  const [noteOn, setNoteOn] = useState(true);
+  const [noteOn, setNoteOn] = useState(false);
 
   const thisNote = useSelector((state) =>
     state.form.data.find((item) => item._id === props.id)
