@@ -6,7 +6,7 @@ import * as actions from '../actions';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Header from './Header';
-import NoteDashBoard from './NoteDashBoard';
+import NoteDashboard from './NoteDashboard';
 import CreateNewNote from './CreateNewNote';
 import NotePublicShow from './NotePublicShow';
 
@@ -33,7 +33,8 @@ function App() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.fetchUser())
+    dispatch(actions.fetchUser());
+    console.log("Fetched User");
   },
   []);
 
@@ -42,6 +43,7 @@ function App() {
   const fetchUserFirst = () => {
     if (authData !== null) {
       dispatch(actions.loadForm(authData._id));
+      console.log("Fetched ID: "+ authData._id);
     }
   };
 
@@ -57,13 +59,9 @@ function App() {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={NotePublicShow} />
-            <Route exact path="/login" component={NoteDashBoard} />
-            <Route exact path="/login" component={CreateNewNote} />
-            { authData ?
-              <Redirect to="/login" />
-            :
-              <Redirect to="/" />
+            <Route exact path="/" component={NoteDashboard} />
+            { authData &&
+              <Route exact path="/" component={CreateNewNote} />
             }
             </div>
         </BrowserRouter>

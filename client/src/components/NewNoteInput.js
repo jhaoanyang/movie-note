@@ -15,7 +15,6 @@ function NewNoteInput() {
       authRead: authData._id,
       authWrite: authData._id
     }
-    console.log(editedData);
     setText("");
     dispatch(actions.addForm(editedData));
   };

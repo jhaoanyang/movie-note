@@ -2,10 +2,18 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../actions';
 
+import { makeStyles, Grid } from '@material-ui/core/';
+
 import Note from './notes/Note'
 
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    padding: theme.spacing(3),
+  }
+}));
 
-function NoteDashBoard() {
+function NoteDashboard() {
+  const classes = useStyles();
 
   const editedArray = useSelector(state => state.form.edited);
   const dispatch = useDispatch();
@@ -19,15 +27,16 @@ function NoteDashBoard() {
   const formData = useSelector(state => state.form.data);
 
   return (
-      formData.map((item, index) => {
-        return (
-          <Note
-            key={index}
-            noteItem={item}
-          />
-        );
-      })
+    <Grid container spacing={4} className={classes.grid}>
+      {formData.map((item, index) => 
+        <Note
+          key={index}
+          noteItem={item}
+        />
+      )}
+      
+    </Grid>
   );
 }
 
-export default NoteDashBoard;
+export default NoteDashboard;

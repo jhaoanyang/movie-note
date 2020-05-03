@@ -15,8 +15,7 @@ function Delete(props) {
   }
 
   return(
-        <a href=""
-        onClick={e => handleClick(e)}>x</a>
+        <a onClick={e => handleClick(e)}>x</a>
   );
 }
 
