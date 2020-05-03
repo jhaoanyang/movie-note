@@ -6,9 +6,8 @@ import * as actions from '../actions';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Header from './Header';
-import NoteDashboard from './NoteDashboard';
+import NoteBoard from './NoteBoard';
 import CreateNewNote from './CreateNewNote';
-import NotePublicShow from './NotePublicShow';
 
 
 
@@ -59,7 +58,7 @@ function App() {
         <BrowserRouter>
           <div>
             <Header />
-            <Route exact path="/" component={NoteDashboard} />
+            <Route exact path="/" component={NoteBoard} />
             { authData &&
               <Route exact path="/" component={CreateNewNote} />
             }
