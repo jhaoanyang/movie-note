@@ -34,7 +34,7 @@ module.exports = (app) => {
     });
   });
 
-  app.patch('/api/notes/:notesId', requireLogin, (req, res) => {
+  app.patch('/api/notes/:noteId', requireLogin, (req, res) => {
     Note.updateOne(
         { _id: req.body._id },
         { $set: req.body },
@@ -48,9 +48,9 @@ module.exports = (app) => {
     );
   });
 
-  app.delete('/api/notes/:notesId', requireLogin, (req, res) => {
+  app.delete('/api/notes/:noteId', requireLogin, (req, res) => {
     Note.deleteOne(
-      { _id: req.params.notesId },
+      { _id: req.params.noteId },
       (err, response) => {
         if(!err){
           res.send(response);

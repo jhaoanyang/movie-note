@@ -4,7 +4,7 @@ import * as actions from '../actions';
 
 import { makeStyles, Grid } from '@material-ui/core/';
 
-import Note from './notes/Note'
+import Note from './note/Note'
 
 const useStyles = makeStyles((theme) => ({
   grid: {
