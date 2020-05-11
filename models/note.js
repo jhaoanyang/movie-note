@@ -10,8 +10,8 @@ const noteSchema = new Schema({
   watchDay: String,
   editedDay: Date,
 
-  scences: { type: Array, default: ["", "", "", ""] },
-  scenceLv: { type: Array, default: ["act", "scence", "beat", "beat"] },
+  scences: { type: Array, default: [] },
+  scenceLv: { type: Array, default: [] },
 
   scenceRef: { type: Array, default: [[]] },
   scenceNote: { type: Array, default: [""] },

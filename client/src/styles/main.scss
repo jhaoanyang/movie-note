@@ -1,0 +1,49 @@
+@import 'config';
+
+body {
+    color: $text-color;
+    height: 100vh;
+    font-family: 'roboto';
+    line-height: 1;
+}
+
+h1, h2, h3 {
+    font-weight: 400;
+}
+
+a {
+    color: $text-color;
+    text-decoration: none;
+}
+
+.header {
+    background-color: $primary-color;
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .login-btn {
+        &:hover {
+            background-color: $lighter-color;
+        }
+    }
+}
+
+// .note-board {
+//     height: 100%;
+//     width: 100%;
+// }
+
+// .new-note {
+//     new-note-fab {
+//         position: fixed;
+//         bottom: 1rem;
+//         right: 1rem;
+//     }
+
+//     new-note-input {
+//     }
+// }

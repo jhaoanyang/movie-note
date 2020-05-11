@@ -1,28 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import * as actions from "../../actions";
+import * as actions from "../../../actions";
 
-import { makeStyles, Modal, Box, Grid, Paper, Card } from "@material-ui/core/";
+import { Box } from "@material-ui/core/";
 
-import * as nested from "./nested";
-import AmazingInput from "./AmazingInput";
-
-const useStyles = makeStyles((theme) => ({
-  fullHeight: {
-    flexGrow: 1,
-    display: "flex",
-    height: "98%",
-  },
-  card: {
-    padding: theme.spacing(2),
-    width: "100%",
-  },
-}));
+import AmazingInput from "../AmazingInput";
 
 function ScenceNote(props) {
-  const classes = useStyles();
-
   const [refOn, setRefOn] = useState(false);
 
   const thisNote = useSelector((state) =>
@@ -78,17 +62,20 @@ function ScenceNote(props) {
 
   return (
     <div>
-      <Box border={refOn ? 1 : 0} onClick={(_) => handleClick()}>
+      <Box border={refOn ? 1 : 0} onClick={(_) => handleClick()} display="inline">
         {(props.item.length !== 0) ? (
         scenceRef[props.index].map((item, index) => (
           <a name={`scenceRef[${props.index}][${index}]`}>
             {scences[item]}
-            {index !== props.item.length - 1 && "───"}
+            {index !== props.item.length - 1 && "──"}
           </a>
         ))) : (
           <a><i>點此新增 Reference</i></a>
         )}
       </Box>
+      <button onClick={_ => buttonClick()} display="inline">
+        ←
+      </button>
       <AmazingInput
         id={props.id}
         name={`scenceNote[${props.index}]`}
@@ -96,9 +83,7 @@ function ScenceNote(props) {
         chinese="筆記"
         head={false}
       />
-      <button onClick={_ => buttonClick()}>
-          ←
-      </button>
+
       <br />
     </div>
   );

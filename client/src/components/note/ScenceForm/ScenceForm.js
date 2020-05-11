@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import * as actions from "../../actions";
+import * as actions from "../../../actions";
 
 import { makeStyles, Modal, Grid, Card } from "@material-ui/core/";
 
-import * as nested from "./nested";
+import Nested from "./Nested";
 import EditButton from "./EditButton";
 import ScenceNote from "./ScenceNote";
+import Plaintext from "./Plaintext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(2),
     width: "100%",
+    overflowY: "auto",
   },
   rightBottom: {
     margin: theme.spacing.unit,
@@ -36,7 +38,6 @@ function ScenceForm(props) {
   const classes = useStyles();
 
   const [editing, setEditing] = useState(false);
-  const [noteOn, setNoteOn] = useState(false);
 
   const thisNote = useSelector((state) =>
     state.form.data.find((item) => item._id === props.id)
@@ -45,7 +46,7 @@ function ScenceForm(props) {
   const { scences, scenceLv, scenceRef, scenceNote } = thisNote;
 
   const dispatch = useDispatch();
-  const onSubmit = (data) => {
+  const onSubmit = data => {
     setEditing(!editing);
     dispatch(actions.editForm(data, props.id));
   };
@@ -88,12 +89,12 @@ function ScenceForm(props) {
         justify="center"
         alignItems="center"
         xs={9}
-        md={noteOn ? 9 : 6}
+        md={editing ? 6 : 9}
         className={classes.root}
         spacing={1}
       >
-        {noteOn && (
-          <Grid item xs={12} md={noteOn ? 4 : 12} className={classes.fullHeight}>
+        {!editing && (
+          <Grid item xs={12} md={editing ? 12 : 4} className={classes.fullHeight}>
             <Card className={classes.card}>
               {scenceRef.map((item, index) =>
                 <ScenceNote
@@ -112,34 +113,24 @@ function ScenceForm(props) {
             </Card>
           </Grid>)}
 
-        <Grid item xs={12} md={noteOn ? 8 : 12} className={classes.fullHeight}>
+        <Grid item xs={12} md={editing ? 12 : 8} className={classes.fullHeight}>
           <Card className={classes.card}>
+            {editing && <EditButton id={props.id} />}
+            {editing && <br />}
             <form onSubmit={handleSubmit(onSubmit)}>
               {scences.map((item, index) =>
                 editing === true
-                  ? nested.input(item, index, scenceLv, register)
-                  : nested.plaintext(item, index, scenceLv)
+                  ? <Nested item={item} index={index} id={props.id} register={register} />
+                  : <Plaintext item={item} index={index} id={props.id} scenceLv={scenceLv} />
               )}
               <br />
-              {!noteOn && (
                 <div>
                   <br />
                   <button type="submit">
                     {editing === true ? "儲存表格" : "修改表格"}
                   </button>
                 </div>
-              )}
             </form>
-            {editing ? (
-              <EditButton id={props.id} />
-            ) : (
-              <div>
-                <br />
-                <button onClick={() => setNoteOn(!noteOn)}>
-                  {noteOn ? "◄ 關閉筆記" : "▼ 對照筆記"}
-                </button>
-              </div>
-            )}
           </Card>
         </Grid>
       </Grid>

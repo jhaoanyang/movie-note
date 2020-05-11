@@ -1,41 +1,32 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form'
-import * as actions from '../../actions';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-import ScenceForm from './ScenceForm';
+import ScenceForm from "./ScenceForm/ScenceForm";
 
 function Abstract(props) {
-  const [ openState, setOpenState ] = useState(false);
+  const [openState, setOpenState] = useState(false);
 
   const thisNote = useSelector((state) =>
-  state.form.data.find((item) => item._id === props.id)
-);
-//   const dispatch = useDispatch( );
-//   const onSubmit = (data) => {
-//     dispatch(actions.editForm(data, props.id));
-//   };
-  
-//   const { register, handleSubmit } = useForm();
+    state.form.data.find((item) => item._id === props.id)
+  );
 
   const abstractNote = thisNote.scenceRef.filter((item, index) => index < 3);
-  console.log(abstractNote)
-  
-  return(
+
+  return (
     <div>
       <div onClick={() => setOpenState(true)}>
-        {abstractNote.map((item, index) =>
+        {abstractNote.map((item, index) => (
           <div>
-            {item.map((it, i) => 
-                <a name={`scenceRef[${index}][${i}]`}>
-                  {thisNote.scences[it]}
-                  {i !== item.length - 1 && "───"}
-                </a>
-            )}
+            {item.map((it, i) => (
+              <a name={`scenceRef[${index}][${i}]`}>
+                {thisNote.scences[it]}
+                {i !== item.length - 1 && "───"}
+              </a>
+            ))}
           </div>
-        )}
+        ))}
         <div>
-          <br/>
+          <br />
           <i>點擊展開</i>
         </div>
       </div>

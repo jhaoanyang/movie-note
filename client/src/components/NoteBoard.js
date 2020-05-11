@@ -1,6 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import * as actions from '../actions';
+import { useSelector } from 'react-redux';
 
 import { makeStyles, Grid } from '@material-ui/core/';
 
@@ -14,15 +13,6 @@ const useStyles = makeStyles((theme) => ({
 
 function NoteDashboard() {
   const classes = useStyles();
-
-  const editedArray = useSelector(state => state.form.edited);
-  const dispatch = useDispatch();
-  setTimeout(() => {
-    dispatch(actions.updateDB(editedArray));
-  }, 60000);
-  window.onbeforeunload = e => {
-    dispatch(actions.updateDB(editedArray));
-  };
 
   const formData = useSelector(state => state.form.data);
 

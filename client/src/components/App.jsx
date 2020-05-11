@@ -1,15 +1,14 @@
-import React, { useEffect }from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import * as actions from '../actions';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import * as actions from "../actions";
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-import Header from './Header';
-import NoteBoard from './NoteBoard';
-import CreateNewNote from './CreateNewNote';
+import Header from "./Header";
+import NoteBoard from "./NoteBoard";
+import CreateNewNote from "./CreateNewNote";
 
-
+const TEN_SECOND = 1000;
 
 const theme = createMuiTheme({
   palette: {
@@ -29,41 +28,41 @@ const theme = createMuiTheme({
 });
 
 function App() {
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.fetchUser());
     console.log("Fetched User");
-  },
-  []);
+  }, []);
 
-  const authData = useSelector(state => state.auth);
+  const authData = useSelector((state) => state.auth);
 
   const fetchUserFirst = () => {
     if (authData !== null) {
       dispatch(actions.loadForm(authData._id));
-      console.log("Fetched ID: "+ authData._id);
+      console.log("Fetched ID: " + authData._id);
     }
   };
 
   useEffect(() => {
     fetchUserFirst();
-  },
-  [authData]);
-  
+  }, [authData]);
+
+  const formData = useSelector((state) => state.form.data);
+
+  setTimeout(() => {
+    dispatch(actions.updateDB(formData));
+  }, TEN_SECOND);
+
+  window.onbeforeunload = () => {
+    dispatch(actions.updateDB(formData));
+  };
 
   return (
     <div>
-     <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <div>
-            <Header />
-            <Route exact path="/" component={NoteBoard} />
-            { authData &&
-              <Route exact path="/" component={CreateNewNote} />
-            }
-            </div>
-        </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <NoteBoard />
+        {authData && <CreateNewNote />}
       </ThemeProvider>
     </div>
   );
